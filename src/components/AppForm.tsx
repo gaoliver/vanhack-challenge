@@ -66,9 +66,12 @@ const AppForm = (props: IProps) => {
   };
 
   const pickVideo = async () => {
-    const permisson = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permisson.status !== 'granted') {
-      return alert('Sorry, we need files permissions to make this work!');
+    const permission = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      const request = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!request.granted) {
+        return alert('Sorry, we need files permissions to make it work.');
+      }
     }
 
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -83,9 +86,12 @@ const AppForm = (props: IProps) => {
   };
 
   const pickDocument = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      return alert('Sorry, we need files permissions to make this work!');
+    const permission = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      const request = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!request.granted) {
+        return alert('Sorry, we need files permissions to make it work.');
+      }
     }
 
     let result = await DocumentPicker.getDocumentAsync();
