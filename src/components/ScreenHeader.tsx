@@ -1,20 +1,51 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Ionicons, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import {
+  Ionicons,
+  Feather,
+  MaterialCommunityIcons,
+  MaterialIcons
+} from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import { radius } from '../constants/Settings';
+import relocateFormat from '../utils/relocateFormat';
+import currencyFormat from '../utils/currencyFormat';
 
 interface IProps {
-  info?: string;
+  right?: string;
+  title?: string;
+  location?: string;
+  relocation?: string;
+  salaryFrom?: number;
+  salaryTo?: number;
+  currency?: string;
+  hasInfo?: boolean;
+  isJob?: boolean;
 }
 
 const translate = (props: IProps) => ({
-  info: props.info ? props.info : ''
+  right: props.right ? props.right : '',
+  title: props.title ? props.title : '',
+  location: props.location ? props.location : '',
+  relocation: props.relocation ? relocateFormat(props.relocation) : '',
+  salaryFrom: props.salaryFrom ? currencyFormat(props.salaryFrom) : 0,
+  salaryTo: props.salaryTo ? currencyFormat(props.salaryTo) : 0,
+  hasInfo: props.hasInfo ? true : false,
+  isJob: props.isJob ? true : false
 });
 
 const ScreenHeader = (props: IProps) => {
-  const { info } = translate(props);
+  const {
+    right,
+    title,
+    location,
+    relocation,
+    salaryFrom,
+    salaryTo,
+    hasInfo,
+    isJob
+  } = translate(props);
 
   return (
     <View style={styles.headerContainer}>
@@ -27,25 +58,42 @@ const ScreenHeader = (props: IProps) => {
           />
           <Text style={[styles.info, { fontWeight: 'normal' }]}>Back</Text>
         </View>
-        <Text style={styles.info}>{info}</Text>
+        <Text style={styles.info}>{right}</Text>
       </View>
-      <View style={[styles.headerContent, styles.infoHeader]}>
-        <Text style={styles.title}>Title</Text>
-        <View style={[styles.row, styles.infoContainer]}>
-          <View style={styles.row}>
-            <Feather name="map-pin" style={styles.icon} />
-            <Text style={styles.infoText}>Location</Text>
-          </View>
-          <View style={styles.row}>
-            <MaterialIcons name="work-outline" size={13} style={styles.icon} />
-            <Text style={styles.infoText}>Relocation</Text>
-          </View>
+      {hasInfo && (
+        <View style={[styles.headerContent, styles.infoHeader]}>
+          <Text style={styles.title}>{title}</Text>
+          {isJob && (
+            <>
+              <View style={[styles.row, styles.infoContainer]}>
+                <View style={styles.row}>
+                  <Feather name="map-pin" style={styles.icon} size={10} />
+                  <Text style={styles.infoText} numberOfLines={2}>{location}</Text>
+                </View>
+                <View style={styles.row}>
+                  <MaterialIcons
+                    name="work-outline"
+                    size={11}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.infoText}>{relocation}</Text>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <MaterialCommunityIcons
+                  name="cash-usd-outline"
+                  size={18}
+                  style={[styles.icon, { marginTop: 0 }]}
+                  color={Colors.colors.secondary}
+                />
+                <Text
+                  style={styles.salary}
+                >{`${salaryFrom} up to ${salaryTo}`}</Text>
+              </View>
+            </>
+          )}
         </View>
-        <View style={styles.row}>
-          <MaterialCommunityIcons name="cash-usd-outline" size={18} style={[styles.icon, {marginTop: 0}]} color={Colors.colors.secondary} />
-          <Text style={styles.salary}>1000000</Text>
-        </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -54,7 +102,8 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 10
   },
   headerContent: {
     height: 40,
@@ -88,19 +137,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     color: Colors.light.text
   },
   infoContainer: {
     width: '100%',
     justifyContent: 'space-evenly',
-    marginVertical: 15
+    marginVertical: 20
   },
   infoText: {
-    color: Colors.light.text
+    maxWidth: 140,
+    fontSize: 11,
+    color: Colors.light.text,
   },
   salary: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 16,
     color: Colors.colors.secondary
   },
@@ -108,7 +159,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   icon: {
-    marginRight: 5,
-    marginTop: 2
+    marginRight: 2,
+    marginTop: 1
   }
 });

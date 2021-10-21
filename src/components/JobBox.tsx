@@ -47,7 +47,7 @@ const JobBox = (props: IJobBoxProps) => {
         />
         <Text style={styles.salary}>{`${currencyFormat(
           job.salaryFrom
-        )} up to ${currencyFormat(job.salaryTo)} (${job.currency}/year)`}</Text>
+        )} up to ${currencyFormat(job.salaryTo)} (${job.currency}/Annual)`}</Text>
       </View>
       <Text style={styles.description} numberOfLines={3}>
         {job.description}

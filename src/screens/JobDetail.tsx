@@ -20,13 +20,22 @@ const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
 
   const translate = {
     date: job?.createdAt ? job?.createdAt : '',
-    title: job?.title ? job.title : ""
+    title: job?.title ? job.title : ''
   };
 
   return (
     <AppContainer>
       <AppContent>
-        <ScreenHeader info={dateFormat(translate.date)} />
+        <ScreenHeader
+          right={dateFormat(translate.date)}
+          hasInfo
+          title={job?.title}
+          isJob
+          location={job?.location}
+          relocation={job?.relocate}
+          salaryFrom={job?.salaryFrom}
+          salaryTo={job?.salaryTo}
+        />
       </AppContent>
     </AppContainer>
   );
@@ -34,6 +43,4 @@ const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
 
 export default JobDetail;
 
-const styles = StyleSheet.create({
-  
-});
+const styles = StyleSheet.create({});
