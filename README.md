@@ -2,7 +2,7 @@
 
 ## React Native Code Challenge
 
-This is a code challenge received from VanHack. I had to:
+This is a code challenge received from VanHack, in which I had to create:
 
 1. A Job listing page with a scroll.
 2. A Job details page.
@@ -16,7 +16,7 @@ This is a code challenge received from VanHack. I had to:
 
 ## How to run
 
-Open the terminal inside the project folder, cloned to your machine. The run:
+Open the terminal inside the project folder, cloned to your machine. Then run:
 
 ```Shell
 yarn && yarn start
