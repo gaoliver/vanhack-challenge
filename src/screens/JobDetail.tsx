@@ -6,6 +6,7 @@ import AppButton from '../components/AppButton';
 
 import AppContainer from '../components/AppContainer';
 import AppContent from '../components/AppContent';
+import AppForm from '../components/AppForm';
 import ScreenHeader from '../components/ScreenHeader';
 import Colors from '../constants/Colors';
 import { ApplicationReducer } from '../redux/reducers';
@@ -13,6 +14,7 @@ import dateFormat from '../utils/dateFormat';
 import { NavigationParamsProp } from '../utils/types';
 
 const JobDetail = ({ route }: NavigationParamsProp) => {
+  const [visibleModal, setVisibleModal] = useState(true)
   const { jobId } = route.params;
   const jobList = useSelector(
     (state: ApplicationReducer) => state.jobsReducer.listJobs
@@ -46,6 +48,8 @@ const JobDetail = ({ route }: NavigationParamsProp) => {
         </View>
 
         <Text style={styles.description}>{job?.description}</Text>
+
+        <AppForm isVisible={visibleModal} />
       </AppContent>
       <Footer style={styles.footer}>
         <AppButton title="Apply now" />

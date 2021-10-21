@@ -60,3 +60,9 @@ export type StackParamList = {
   Home: undefined;
   JobDetail: { jobId: number };
 };
+
+export enum IVerifyField {
+  'empty',
+  'wrong',
+  'ok'
+}
