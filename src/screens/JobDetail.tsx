@@ -2,6 +2,7 @@ import { Footer } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import AppButton from '../components/AppButton';
 
 import AppContainer from '../components/AppContainer';
 import AppContent from '../components/AppContent';
@@ -47,7 +48,8 @@ const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
 
         <Text style={styles.description}>{job?.description}</Text>
       </AppContent>
-      <Footer>
+      <Footer style={styles.footer}>
+        <AppButton title="Apply now" />
       </Footer>
     </AppContainer>
   );
@@ -73,5 +75,10 @@ const styles = StyleSheet.create({
   description: {
     marginTop: 20,
     color: Colors.light.text
+  },
+  footer: {
+    paddingTop: 10,
+    paddingBottom: 15,
+    height: 80
   }
 });
