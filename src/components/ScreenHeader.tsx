@@ -31,8 +31,9 @@ const translate = (props: IProps) => ({
   relocation: props.relocation ? relocateFormat(props.relocation) : '',
   salaryFrom: props.salaryFrom ? currencyFormat(props.salaryFrom) : 0,
   salaryTo: props.salaryTo ? currencyFormat(props.salaryTo) : 0,
+  currency: props.currency ? props.currency : "",
   hasInfo: props.hasInfo ? true : false,
-  isJob: props.isJob ? true : false
+  isJob: props.isJob ? true : false,
 });
 
 const ScreenHeader = (props: IProps) => {
@@ -43,8 +44,9 @@ const ScreenHeader = (props: IProps) => {
     relocation,
     salaryFrom,
     salaryTo,
+    currency,
     hasInfo,
-    isJob
+    isJob,
   } = translate(props);
 
   return (
@@ -82,13 +84,13 @@ const ScreenHeader = (props: IProps) => {
               <View style={styles.row}>
                 <MaterialCommunityIcons
                   name="cash-usd-outline"
-                  size={18}
+                  size={16}
                   style={[styles.icon, { marginTop: 0 }]}
                   color={Colors.colors.secondary}
                 />
                 <Text
                   style={styles.salary}
-                >{`${salaryFrom} up to ${salaryTo}`}</Text>
+                >{`${salaryFrom} up to ${salaryTo} (${currency}/Annual)`}</Text>
               </View>
             </>
           )}
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
   },
   salary: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.colors.secondary
   },
   row: {

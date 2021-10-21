@@ -35,6 +35,7 @@ const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
           relocation={job?.relocate}
           salaryFrom={job?.salaryFrom}
           salaryTo={job?.salaryTo}
+          currency={job?.currency}
         />
       </AppContent>
     </AppContainer>
