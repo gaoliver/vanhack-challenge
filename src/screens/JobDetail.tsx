@@ -1,3 +1,4 @@
+import { Footer } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -37,11 +38,40 @@ const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
           salaryTo={job?.salaryTo}
           currency={job?.currency}
         />
+
+        <View style={styles.skills}>
+          <Text style={styles.skillsTitle}>
+            Skills: <Text style={styles.skillsText}>{job?.skills}</Text>
+          </Text>
+        </View>
+
+        <Text style={styles.description}>{job?.description}</Text>
       </AppContent>
+      <Footer>
+      </Footer>
     </AppContainer>
   );
 };
 
 export default JobDetail;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  skills: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: Colors.light.grey + '2'
+  },
+  skillsTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: Colors.light.grey
+  },
+  skillsText: {
+    fontWeight: 'normal',
+    color: Colors.light.text
+  },
+  description: {
+    marginTop: 20,
+    color: Colors.light.text
+  }
+});

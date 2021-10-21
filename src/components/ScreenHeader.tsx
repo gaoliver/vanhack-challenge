@@ -113,7 +113,7 @@ export default ScreenHeader;
 const styles = StyleSheet.create({
   headerContainer: {
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 20
   },
   headerContent: {
     height: 40,
