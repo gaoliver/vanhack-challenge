@@ -1,0 +1,42 @@
+import { StackNavigationProp } from '@react-navigation/stack';
+
+export enum RequesterMethodEnum {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+  PATCH = 'PATCH'
+}
+
+export type RequesterServiceModel = {
+  method: RequesterMethodEnum;
+  endpoint: string;
+};
+
+export type IJobProps = {
+  id: number;
+  createdAt: string;
+  numberOfPositions: number;
+  companyName: string;
+  title: string;
+  area: string;
+  description: string;
+  skills: string;
+  slug: string;
+  totalHires: number;
+  flagCode: string;
+  location: string;
+  relocate: string;
+  salaryFrom: number;
+  salaryTo: number;
+  currency: string;
+  jobType: string;
+  canApply: boolean;
+};
+
+export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+
+export type StackParamList = {
+  Home: undefined;
+  JobDetail: undefined;
+};
