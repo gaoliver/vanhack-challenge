@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "vanhack-challenge",
+    "name": "VanHack Challenge",
     "slug": "vanhack-challenge",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Code challenge from VanHack to test my mobile app development using React Native.",
+    "githubUrl": "https://github.com/gaoliver/vanhack-challenge.git"
   }
 }
