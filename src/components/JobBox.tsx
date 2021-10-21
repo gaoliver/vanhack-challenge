@@ -7,6 +7,7 @@ import { IJobProps } from '../utils/types';
 import AppBox from './AppBox';
 import dateFormat from '../utils/dateFormat';
 import relocateFormat from '../utils/relocateFormat';
+import currencyFormat from '../utils/currencyFormat';
 
 type IJobBoxProps = { job: IJobProps };
 
@@ -34,17 +35,19 @@ const JobBox = ({ job }: IJobBoxProps) => {
           size={14}
           color={Colors.colors.secondary}
         />
-        <Text
-          style={styles.salary}
-        >{`${job.salaryFrom} up to ${job.salaryTo}`}</Text>
+        <Text style={styles.salary}>{`${currencyFormat(
+          job.salaryFrom
+        )} up to ${currencyFormat(job.salaryTo)} (${job.currency}/year)`}</Text>
       </View>
       <Text style={styles.description} numberOfLines={3}>
         {job.description}
       </Text>
-      <Text
-        style={styles.skills}
-        numberOfLines={2}
-      >{`Skills: ${job.skills}`}</Text>
+      <View style={styles.skillsContainer}>
+        <Text
+          style={styles.skills}
+          numberOfLines={2}
+        >{`Skills: ${job.skills}`}</Text>
+      </View>
     </AppBox>
   );
 };
@@ -79,6 +82,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginVertical: 15,
     color: Colors.light.text
+  },
+  skillsContainer: {
+    backgroundColor: Colors.light.background,
+    padding: 5,
+    borderRadius: 5
   },
   skills: {
     fontSize: 11,
