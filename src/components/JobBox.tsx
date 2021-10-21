@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import { IJobProps } from '../utils/types';
@@ -31,7 +31,7 @@ const JobBox = (props: IJobBoxProps) => {
           <Text style={styles.location}>{job.location}</Text>
         </View>
         <View style={styles.row}>
-          <Feather name="map-pin" style={styles.icon} />
+          <MaterialIcons name="work-outline" style={styles.icon} />
           <Text style={styles.location}>{relocateFormat(job.relocate)}</Text>
         </View>
         <Text style={styles.location}>{`Posted ${dateFormat(

@@ -1,14 +1,10 @@
 const primary = '#4D8BFA';
-const primaryClear = '#69A0FF';
-const primaryDark = '#2457AD';
 const secondary = '#AD7C13';
 const accent = '#FAC24D';
 
 export default {
   colors: {
     primary: primary,
-    primaryClear: '#69A0FF',
-    primaryDark: '#2457AD',
     secondary: secondary,
     accent: '#FAC24D'
   },
@@ -19,7 +15,7 @@ export default {
     borderColor: '#bbb',
     accentText: '#FFF',
     boxBackground: '#FFF',
-    header: primaryDark,
+    header: primary + "25",
     statusbar: '#2457AD'
   }
 };
