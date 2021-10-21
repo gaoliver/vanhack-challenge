@@ -1,23 +1,33 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
-import { radius, shadowOpacity } from '../constants/Settings';
 import { IJobProps } from '../utils/types';
+import AppBox from './AppBox';
 
 type IJobBoxProps = { job: IJobProps };
 
 const JobBox = ({ job }: IJobBoxProps) => {
   return (
-    <View style={styles.boxContainer}>
+    <AppBox boxStyle={{ justifyContent: "space-between" }}>
       <Text style={styles.title}>{job.title}</Text>
       <View style={styles.infoContainer}>
-        <Text style={styles.location}>{job.location}</Text>
-        <Text style={styles.location}>{job.relocate}</Text>
+        <View style={styles.row}>
+          <Feather name="map-pin" style={styles.icon} />
+          <Text style={styles.location}>{job.location}</Text>
+        </View>
+        <View style={styles.row}>
+          <Feather name="map-pin" style={styles.icon} />
+          <Text style={styles.location}>{job.relocate}</Text>
+        </View>
       </View>
-      <Text
-        style={styles.salary}
-      >{`${job.salaryFrom} up to ${job.salaryTo}`}</Text>
+      <View style={styles.row}>
+        <MaterialCommunityIcons name="cash-usd-outline" style={styles.icon} size={14} color={Colors.colors.secondary} />
+        <Text
+          style={styles.salary}
+        >{`${job.salaryFrom} up to ${job.salaryTo}`}</Text>
+      </View>
       <Text style={styles.description} numberOfLines={3}>
         {job.description}
       </Text>
@@ -25,29 +35,13 @@ const JobBox = ({ job }: IJobBoxProps) => {
         style={styles.skills}
         numberOfLines={2}
       >{`Skills: ${job.skills}`}</Text>
-    </View>
+    </AppBox>
   );
 };
 
 export default JobBox;
 
 const styles = StyleSheet.create({
-  boxContainer: {
-    justifyContent: 'center',
-    height: 200,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: Colors.light.boxBackground,
-    marginBottom: 10,
-    borderRadius: radius,
-    elevation: 3,
-    shadowOffset: {
-      height: 0,
-      width: 0
-    },
-    shadowRadius: 3,
-    shadowOpacity: shadowOpacity
-  },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -55,12 +49,14 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexDirection: 'row',
-    marginTop: 5
+    marginTop: 5,
+    justifyContent: 'space-between'
   },
   location: {
     fontSize: 12,
     marginRight: 10,
-    marginBottom: 5
+    marginBottom: 5,
+    color: Colors.light.text
   },
   salary: {
     fontWeight: 'bold',
@@ -70,9 +66,17 @@ const styles = StyleSheet.create({
   description: {
     width: '100%',
     fontSize: 12,
-    marginVertical: 10
+    marginVertical: 15,
+    color: Colors.light.text
   },
   skills: {
-    fontSize: 11
+    fontSize: 11,
+    color: Colors.light.grey
+  },
+  icon: {
+    marginRight: 5
+  },
+  row: {
+    flexDirection: 'row'
   }
 });
