@@ -1,14 +1,21 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import AppContainer from '../components/AppContainer';
+import AppContent from '../components/AppContent';
+import { NavigationParamsProp } from '../utils/types';
 
-const JobDetail = () => {
+const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
+  const { jobId } = route.params;
+
   return (
-    <View>
-      <Text></Text>
-    </View>
-  )
-}
+    <AppContainer>
+      <AppContent>
+        <Text>{`Olá ${jobId}`}</Text>
+      </AppContent>
+    </AppContainer>
+  );
+};
 
-export default JobDetail
+export default JobDetail;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum RequesterMethodEnum {
@@ -53,8 +54,9 @@ export type IJobProps = {
 };
 
 export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+export type NavigationParamsProp = NativeStackScreenProps<StackParamList, 'JobDetail'>;
 
 export type StackParamList = {
   Home: undefined;
-  JobDetail: { productId: number };
+  JobDetail: { jobId: number };
 };

@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }: IHomeProps) => {
   const getNewJobs = async () => {
     setListLoading(true);
     const offset = 0;
-    const limit = 10;
+    const limit = 5;
     const service = {
       ...services.getJobSearch,
       endpoint: services.getJobSearch(offset, limit).endpoint
@@ -64,10 +64,13 @@ const HomeScreen = ({ navigation }: IHomeProps) => {
   };
 
   const onJobPress = (id: number) => {
-    navigation.navigate('JobDetail', { productId: id });
+    navigation.navigate('JobDetail', { jobId: id });
   };
 
-  const renderItem = ({ item }: any) => {
+  interface IRenderItem {
+    item: IJobProps
+  }
+  const renderItem = ({ item }: IRenderItem) => {
     return <JobBox job={item} onPress={() => onJobPress(item.id)} />;
   };
 
