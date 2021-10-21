@@ -5,12 +5,14 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { IJobProps } from '../utils/types';
 import AppBox from './AppBox';
+import dateFormat from '../utils/dateFormat';
+import relocateFormat from '../utils/relocateFormat';
 
 type IJobBoxProps = { job: IJobProps };
 
 const JobBox = ({ job }: IJobBoxProps) => {
   return (
-    <AppBox boxStyle={{ justifyContent: "space-between" }}>
+    <AppBox boxStyle={{ justifyContent: 'space-between' }}>
       <Text style={styles.title}>{job.title}</Text>
       <View style={styles.infoContainer}>
         <View style={styles.row}>
@@ -19,11 +21,19 @@ const JobBox = ({ job }: IJobBoxProps) => {
         </View>
         <View style={styles.row}>
           <Feather name="map-pin" style={styles.icon} />
-          <Text style={styles.location}>{job.relocate}</Text>
+          <Text style={styles.location}>{relocateFormat(job.relocate)}</Text>
         </View>
+        <Text style={styles.location}>{`Posted ${dateFormat(
+          job.createdAt
+        )}`}</Text>
       </View>
       <View style={styles.row}>
-        <MaterialCommunityIcons name="cash-usd-outline" style={styles.icon} size={14} color={Colors.colors.secondary} />
+        <MaterialCommunityIcons
+          name="cash-usd-outline"
+          style={styles.icon}
+          size={14}
+          color={Colors.colors.secondary}
+        />
         <Text
           style={styles.salary}
         >{`${job.salaryFrom} up to ${job.salaryTo}`}</Text>
@@ -49,11 +59,12 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexDirection: 'row',
-    marginTop: 5,
-    justifyContent: 'space-between'
+    marginTop: 10,
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
   },
   location: {
-    fontSize: 12,
+    fontSize: 11,
     marginRight: 10,
     marginBottom: 5,
     color: Colors.light.text
@@ -77,6 +88,7 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 });

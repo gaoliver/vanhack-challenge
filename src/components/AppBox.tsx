@@ -29,7 +29,7 @@ export default AppBox;
 const styles = StyleSheet.create({
   boxContainer: {
     justifyContent: 'center',
-    height: 200,
+    minHeight: 200,
     padding: padding,
     backgroundColor: Colors.light.boxBackground,
     marginBottom: 10,
