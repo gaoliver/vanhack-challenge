@@ -14,7 +14,7 @@ import dateFormat from '../utils/dateFormat';
 import { NavigationParamsProp } from '../utils/types';
 
 const JobDetail = ({ route }: NavigationParamsProp) => {
-  const [visibleModal, setVisibleModal] = useState(true)
+  const [visibleModal, setVisibleModal] = useState(false);
   const { jobId } = route.params;
   const jobList = useSelector(
     (state: ApplicationReducer) => state.jobsReducer.listJobs
@@ -49,10 +49,13 @@ const JobDetail = ({ route }: NavigationParamsProp) => {
 
         <Text style={styles.description}>{job?.description}</Text>
 
-        <AppForm isVisible={visibleModal} />
+        <AppForm
+          isVisible={visibleModal}
+          onDismiss={() => setVisibleModal(false)}
+        />
       </AppContent>
       <Footer style={styles.footer}>
-        <AppButton title="Apply now" />
+        <AppButton title="Apply now" onPress={() => setVisibleModal(true)} />
       </Footer>
     </AppContainer>
   );

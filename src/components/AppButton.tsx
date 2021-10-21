@@ -8,11 +8,15 @@ interface IProps {
   title?: string;
   onPress?: () => void;
   color?: string;
+  fontSize?: number;
+  maxWidth?: number
 }
 
 const translate = (props: IProps) => ({
   title: props.title ? props.title : '',
   color: props.color ? props.color : Colors.colors.primary,
+  fontSize: props.fontSize ? props.fontSize : 20,
+  maxWidth: props.maxWidth ? props.maxWidth : "auto",
   onPress: props.onPress
     ? props.onPress
     : () => {
@@ -21,19 +25,21 @@ const translate = (props: IProps) => ({
 });
 
 const AppButton = (props: IProps) => {
-  const { title, onPress, color } = translate(props);
+  const { title, onPress, color, fontSize } = translate(props);
 
   const styles = StyleSheet.create({
     buttonContainer: {
       minWidth: 200,
+      maxWidth: 200,
       paddingVertical: 10,
+      paddingHorizontal: 10,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: color,
       borderRadius: radius,
     },
     buttonText: {
-      fontSize: 20,
+      fontSize: fontSize,
       fontWeight: "bold",
       color: Colors.light.accentText
     }
@@ -41,7 +47,7 @@ const AppButton = (props: IProps) => {
 
   return (
     <Pressable style={styles.buttonContainer} onPress={onPress}>
-      <Text style={styles.buttonText}>{title}</Text>
+      <Text style={styles.buttonText} numberOfLines={1}>{title}</Text>
     </Pressable>
   );
 };

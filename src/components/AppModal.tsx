@@ -6,17 +6,24 @@ import { radius } from '../constants/Settings';
 
 interface IProps {
   isVisible: boolean;
+  onDismiss?: () => void;
 }
 
 const translate = (props: IProps) => ({
-  isVisible: props.isVisible ? props.isVisible : false
+  isVisible: props.isVisible ? props.isVisible : false,
+  onDismiss: props.onDismiss ? props.onDismiss : () => {}
 });
 
 const AppModal: React.FC<IProps> = (props) => {
-  const { isVisible } = translate(props);
+  const { isVisible, onDismiss } = translate(props);
 
   return (
-    <ReactNativeModal isVisible={isVisible}>
+    <ReactNativeModal
+      isVisible={isVisible}
+      onBackButtonPress={onDismiss}
+      onBackdropPress={onDismiss}
+      onDismiss={onDismiss}
+    >
       <View style={styles.modalContainer}>{props.children}</View>
     </ReactNativeModal>
   );
@@ -28,8 +35,8 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: '100%',
     minHeight: 100,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
     borderRadius: radius,
     backgroundColor: Colors.light.background

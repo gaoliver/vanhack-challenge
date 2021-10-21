@@ -1,21 +1,26 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Colors from '../constants/Colors';
+import React, { useEffect, useRef, useState } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
+
 import { IVerifyField } from '../utils/types';
 import AppButton from './AppButton';
 import AppModal from './AppModal';
 import AppTextInput from './AppTextInput';
+import FilePicker from './FilePicker';
 
 interface IProps {
   isVisible: boolean;
+  onDismiss?: () => void;
 }
 
 const translate = (props: IProps) => ({
-  isVisible: props.isVisible ? props.isVisible : false
+  isVisible: props.isVisible ? props.isVisible : false,
+  onDismiss: props.onDismiss ? props.onDismiss : () => {}
 });
 
 const AppForm = (props: IProps) => {
-  const { isVisible } = translate(props);
+  const { isVisible, onDismiss } = translate(props);
   const [form, setForm] = useState({
     name: '',
     surname: '',
@@ -24,6 +29,12 @@ const AppForm = (props: IProps) => {
     cvFile: '',
     presentationVideo: ''
   });
+  const [pdf, setPdf] = useState('');
+  const video = form.presentationVideo
+    .replace('file:///', '')
+    .split('/')
+    .slice(-1)
+    .toString();
 
   const [nameWarning, setNameWarning] = useState<IVerifyField>();
   const [surnameWarning, setSurnameWarning] = useState<IVerifyField>();
@@ -122,8 +133,49 @@ const AppForm = (props: IProps) => {
     }
   };
 
+  const pickVideo = async () => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need files permissions to make this work!');
+        }
+      }
+    })();
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    if (!result.cancelled) {
+      setForm({ ...form, presentationVideo: result.uri });
+    }
+  };
+
+  const pickDocument = async () => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need files permissions to make this work!');
+        }
+      }
+    })();
+
+    let result = await DocumentPicker.getDocumentAsync();
+
+    if (result.type === 'success') {
+      setForm({ ...form, cvFile: result.uri });
+      setPdf(result.name);
+    }
+  };
+
   return (
-    <AppModal isVisible={isVisible}>
+    <AppModal isVisible={isVisible} onDismiss={onDismiss}>
       <AppTextInput
         value={form.name}
         label="Name"
@@ -165,8 +217,8 @@ const AppForm = (props: IProps) => {
           textContentType: 'emailAddress',
           keyboardType: 'email-address',
           returnKeyType: 'next',
-          autoCapitalize: 'none'
-          // onSubmitEditing: () => passwordRef.current.focus()
+          autoCapitalize: 'none',
+          onSubmitEditing: () => noticeRef.current.focus()
         }}
       />
       <AppTextInput
@@ -178,21 +230,30 @@ const AppForm = (props: IProps) => {
         inputProps={{
           onBlur: verifyNotice,
           keyboardType: 'number-pad',
-          returnKeyType: 'next',
-          onSubmitEditing: () => emailRef.current.focus()
+          returnKeyType: 'next'
         }}
       />
-      <AppButton title="Apply" onPress={onApply} />
+
+      <FilePicker
+        title="Select your C.V.:"
+        file={pdf}
+        status={cvFileWarning}
+        onPress={pickDocument}
+      />
+      <FilePicker
+        title="Upload your presentation video:"
+        file={video}
+        status={presentationVideoWarning}
+        onPress={pickVideo}
+      />
+
+      <View style={{ marginTop: 20 }}>
+        <AppButton title="Apply" onPress={onApply} />
+      </View>
     </AppModal>
   );
 };
 
 export default AppForm;
 
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    margin: 20,
-    backgroundColor: Colors.light.background
-  }
-});
+const styles = StyleSheet.create({});
