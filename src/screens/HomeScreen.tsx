@@ -60,6 +60,7 @@ const HomeScreen = ({ navigation }: IHomeProps) => {
     };
     const result: RequestResultModel = await requester(service);
     jobList.push(...result.result.items)
+    dispatch(getListJobs(jobList));
     setListLoading(false);
   };
 

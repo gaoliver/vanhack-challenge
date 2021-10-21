@@ -5,6 +5,8 @@ import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { padding } from '../constants/Settings';
 
 interface IProps {
+  loadingIndicator?: boolean;
+  loadAction?: () => void;
   style?: StyleProp<ViewStyle>;
 }
 
