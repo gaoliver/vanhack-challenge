@@ -1,4 +1,5 @@
 const primary = '#4D8BFA';
+const primaryDark = "#2457AD"
 const secondary = '#AD7C13';
 const accent = '#FAC24D';
 
@@ -17,6 +18,6 @@ export default {
     accentText: '#FFF',
     boxBackground: '#FFF',
     header: primary + "25",
-    statusbar: '#2457AD'
+    statusbar: primary
   }
 };

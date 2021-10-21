@@ -10,7 +10,7 @@ const deviceHeight = Dimensions.get('screen').height;
 
 const AppHeader = () => {
   return (
-    <Header style={styles.headerContainer} noShadow hasTabs>
+    <Header style={styles.headerContainer} androidStatusBarColor={Colors.light.statusbar} noShadow hasTabs>
       <Text style={styles.headerTitle}>JobSearch</Text>
     </Header>
   );

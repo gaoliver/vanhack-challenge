@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   footer: {
     paddingTop: 10,
     paddingBottom: 15,
-    height: 80
+    height: 80,
+    backgroundColor: Colors.light.background
   }
 });
