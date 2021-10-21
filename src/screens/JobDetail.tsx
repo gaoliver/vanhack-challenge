@@ -12,9 +12,8 @@ import { ApplicationReducer } from '../redux/reducers';
 import dateFormat from '../utils/dateFormat';
 import { NavigationParamsProp } from '../utils/types';
 
-const JobDetail = ({ navigation, route }: NavigationParamsProp) => {
+const JobDetail = ({ route }: NavigationParamsProp) => {
   const { jobId } = route.params;
-  const [loading, setLoading] = useState(false);
   const jobList = useSelector(
     (state: ApplicationReducer) => state.jobsReducer.listJobs
   );
