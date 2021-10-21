@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
+import { AntDesign } from '@expo/vector-icons';
+
 import Colors from '../constants/Colors';
-import { radius } from '../constants/Settings';
+import { padding, radius } from '../constants/Settings';
 
 interface IProps {
   isVisible: boolean;
@@ -24,7 +26,14 @@ const AppModal: React.FC<IProps> = (props) => {
       onBackdropPress={onDismiss}
       onDismiss={onDismiss}
     >
-      <View style={styles.modalContainer}>{props.children}</View>
+      <View style={styles.modalContainer}>
+        <View style={styles.modalHeader}>
+          <Pressable onPress={onDismiss}>
+            <AntDesign name="close" size={20} />
+          </Pressable>
+        </View>
+        {props.children}
+      </View>
     </ReactNativeModal>
   );
 };
@@ -37,8 +46,15 @@ const styles = StyleSheet.create({
     minHeight: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: padding,
+    paddingBottom: padding,
     borderRadius: radius,
     backgroundColor: Colors.light.background
+  },
+  modalHeader: {
+    width: '100%',
+    alignItems: 'flex-end',
+    paddingTop: 15,
+    paddingBottom: 20
   }
 });
