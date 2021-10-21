@@ -1,3 +1,4 @@
+import { Spinner } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,17 +21,46 @@ interface IHomeProps {
 
 const HomeScreen = ({ navigation }: IHomeProps) => {
   const [loading, setLoading] = useState(false);
+  const [listLoading, setListLoading] = useState(false);
+  const [query, setQuery] = useState('');
+  const [location, setLocation] = useState('');
   const dispatch = useDispatch();
   const jobList = useSelector(
     (state: ApplicationReducer) => state.jobsReducer.listJobs
   );
+  const filteredJobList = jobList
+    .filter(
+      (x) =>
+        x.title.toLowerCase().includes(query.toLowerCase()) ||
+        x.companyName.toLowerCase().includes(query.toLowerCase()) ||
+        x.skills.toLowerCase().includes(query.toLowerCase())
+    )
+    .filter((y) => y.location.toLowerCase().includes(location.toLowerCase()));
 
   const getProducts = async () => {
     setLoading(true);
-    const { getJobSearch: service } = services;
+    const offset = 0;
+    const limit = 10;
+    const service = {
+      ...services.getJobSearch,
+      endpoint: services.getJobSearch(offset, limit).endpoint
+    };
     const result: RequestResultModel = await requester(service);
     dispatch(getListJobs(result.result.items));
     setLoading(false);
+  };
+  
+  const getNewJobs = async () => {
+    setListLoading(true);
+    const offset = 0;
+    const limit = 10;
+    const service = {
+      ...services.getJobSearch,
+      endpoint: services.getJobSearch(offset, limit).endpoint
+    };
+    const result: RequestResultModel = await requester(service);
+    jobList.push(...result.result.items)
+    setListLoading(false);
   };
 
   const onPressProduct = () => {
@@ -42,32 +72,51 @@ const HomeScreen = ({ navigation }: IHomeProps) => {
   };
 
   const FooterComponent = () => {
-    return (
-      <View style={{ height: 50, width: "100%" }} />
-    )
-  }
+    return listLoading ? (
+      <View style={{ height: 50, width: '100%' }} />
+    ) : (
+      <Spinner color={Colors.colors.primary} />
+    );
+  };
+
+  const handleSearch = (text: string) => {
+    setQuery(text);
+  };
+
+  const handleLocationSearch = (text: string) => {
+    setLocation(text);
+  };
 
   useEffect(() => {
     getProducts();
   }, []);
-
 
   return (
     <AppContainer>
       <AppHeader />
       <AppContent style={{ paddingHorizontal: 0, paddingTop: 0 }}>
         <FlatList
-          data={jobList}
+          data={filteredJobList}
           style={{ paddingHorizontal: padding }}
           renderItem={renderItem}
-          ListHeaderComponent={<AppSearch />}
+          keyExtractor={(item) => item.id.toString()}
+          ListHeaderComponent={
+            <AppSearch
+              query={query}
+              location={location}
+              onChangeQuery={handleSearch}
+              onChangeLocation={handleLocationSearch}
+            />
+          }
           ListHeaderComponentStyle={{
             marginBottom: 10,
             backgroundColor: Colors.light.background
           }}
           ListFooterComponent={<FooterComponent />}
           stickyHeaderIndices={[0]}
-          showsVerticalScrollIndicator={false}
+          // showsVerticalScrollIndicator={false}
+          onEndReachedThreshold={0.01}
+          onEndReached={getNewJobs}
         />
       </AppContent>
     </AppContainer>

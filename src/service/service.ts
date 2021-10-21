@@ -1,14 +1,19 @@
 import { RequesterMethodEnum, RequesterServiceModel } from '../utils/types';
 
 interface Services {
-    getJobSearch: RequesterServiceModel;
+    getJobSearch(
+      offset: number,
+      limit: number
+    ): RequesterServiceModel;
 }
 
 const services: Services = {
-    getJobSearch: {
+    getJobSearch(offset: number, limit: number) {
+      return {
         method: RequesterMethodEnum.GET,
-        endpoint: 'job?'
-    }
+        endpoint: `job?skip=${offset}&maxResult=${limit}`,
+      };
+    },
 };
 
 export default services;
