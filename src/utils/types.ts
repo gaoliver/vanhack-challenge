@@ -13,6 +13,24 @@ export type RequesterServiceModel = {
   endpoint: string;
 };
 
+export type RequestResultModel = {
+  result: {
+    items: Array<IJobProps>;
+    pageSize: number;
+    pageSkip: number;
+    totalCount: number;
+    totalPages: number;
+    pageNumber: number;
+    hasPrevious: boolean;
+    hasNext: boolean;
+  };
+  targetUrl: any;
+  success: boolean;
+  error: any;
+  unAuthorizedRequest: boolean;
+  __abp: boolean;
+};
+
 export type IJobProps = {
   id: number;
   createdAt: string;
