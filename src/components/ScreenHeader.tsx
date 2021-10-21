@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   Ionicons,
   Feather,
@@ -11,6 +11,7 @@ import Colors from '../constants/Colors';
 import { radius } from '../constants/Settings';
 import relocateFormat from '../utils/relocateFormat';
 import currencyFormat from '../utils/currencyFormat';
+import { useNavigation } from '@react-navigation/native';
 
 interface IProps {
   right?: string;
@@ -31,12 +32,13 @@ const translate = (props: IProps) => ({
   relocation: props.relocation ? relocateFormat(props.relocation) : '',
   salaryFrom: props.salaryFrom ? currencyFormat(props.salaryFrom) : 0,
   salaryTo: props.salaryTo ? currencyFormat(props.salaryTo) : 0,
-  currency: props.currency ? props.currency : "",
+  currency: props.currency ? props.currency : '',
   hasInfo: props.hasInfo ? true : false,
-  isJob: props.isJob ? true : false,
+  isJob: props.isJob ? true : false
 });
 
 const ScreenHeader = (props: IProps) => {
+  const navigation = useNavigation();
   const {
     right,
     title,
@@ -46,20 +48,24 @@ const ScreenHeader = (props: IProps) => {
     salaryTo,
     currency,
     hasInfo,
-    isJob,
+    isJob
   } = translate(props);
+
+  const goBack = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.headerContent}>
-        <View style={styles.goBackContainer}>
+        <Pressable style={styles.goBackContainer} onPress={goBack}>
           <Ionicons
             name="chevron-back-outline"
             color={Colors.light.accentText}
             size={16}
           />
           <Text style={[styles.info, { fontWeight: 'normal' }]}>Back</Text>
-        </View>
+        </Pressable>
         <Text style={styles.info}>{right}</Text>
       </View>
       {hasInfo && (
@@ -70,7 +76,9 @@ const ScreenHeader = (props: IProps) => {
               <View style={[styles.row, styles.infoContainer]}>
                 <View style={styles.row}>
                   <Feather name="map-pin" style={styles.icon} size={10} />
-                  <Text style={styles.infoText} numberOfLines={2}>{location}</Text>
+                  <Text style={styles.infoText} numberOfLines={2}>
+                    {location}
+                  </Text>
                 </View>
                 <View style={styles.row}>
                   <MaterialIcons
@@ -150,7 +158,7 @@ const styles = StyleSheet.create({
   infoText: {
     maxWidth: 140,
     fontSize: 11,
-    color: Colors.light.text,
+    color: Colors.light.text
   },
   salary: {
     fontWeight: 'bold',
