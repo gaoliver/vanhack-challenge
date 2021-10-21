@@ -9,11 +9,21 @@ import dateFormat from '../utils/dateFormat';
 import relocateFormat from '../utils/relocateFormat';
 import currencyFormat from '../utils/currencyFormat';
 
-type IJobBoxProps = { job: IJobProps };
+type IJobBoxProps = {
+  job: IJobProps;
+  onPress?: () => void;
+};
 
-const JobBox = ({ job }: IJobBoxProps) => {
+const translate = (props: IJobBoxProps) => ({
+  job: props.job && props.job,
+  onPress: props.onPress ? props.onPress : () => {}
+});
+
+const JobBox = (props: IJobBoxProps) => {
+  const { job, onPress } = translate(props);
+
   return (
-    <AppBox boxStyle={{ justifyContent: 'space-between' }}>
+    <AppBox boxStyle={{ justifyContent: 'space-between' }} onPress={onPress}>
       <Text style={styles.title}>{job.title}</Text>
       <View style={styles.infoContainer}>
         <View style={styles.row}>

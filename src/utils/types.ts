@@ -56,5 +56,5 @@ export type NavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 
 export type StackParamList = {
   Home: undefined;
-  JobDetail: undefined;
+  JobDetail: { productId: number };
 };

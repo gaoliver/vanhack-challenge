@@ -63,12 +63,12 @@ const HomeScreen = ({ navigation }: IHomeProps) => {
     setListLoading(false);
   };
 
-  const onPressProduct = (item: IJobProps) => {
-    navigation.navigate('JobDetail', { productId: item.id });
+  const onJobPress = (id: number) => {
+    navigation.navigate('JobDetail', { productId: id });
   };
 
   const renderItem = ({ item }: any) => {
-    return <JobBox job={item} />;
+    return <JobBox job={item} onPress={() => onJobPress(item.id)} />;
   };
 
   const FooterComponent = () => {
