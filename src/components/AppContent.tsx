@@ -1,6 +1,6 @@
-import { Container } from 'native-base';
+import { Content } from 'native-base';
 import React from 'react';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { RefreshControl, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import { padding } from '../constants/Settings';
 
@@ -8,10 +8,30 @@ interface IProps {
   loadingIndicator?: boolean;
   loadAction?: () => void;
   style?: StyleProp<ViewStyle>;
+  noScrolling?: boolean;
 }
 
-const AppContent: React.FC<IProps> = ({ style, children }) => {
-  return <Container style={[styles.container, style]}>{children}</Container>;
+const translate = (props: IProps) => ({
+  loadingIndicator: props.loadingIndicator ? props.loadingIndicator : false,
+  loadAction: props.loadAction ? props.loadAction : () => {},
+  style: props.style ? props.style : {},
+  noScrolling: props.noScrolling ? false : true
+});
+
+const AppContent: React.FC<IProps> = (props) => {
+  const { loadingIndicator, loadAction, style, noScrolling } = translate(props);
+
+  return (
+    <Content
+      style={[styles.container, style]}
+      refreshControl={
+        <RefreshControl refreshing={loadingIndicator} onRefresh={loadAction} />
+      }
+      scrollEnabled={noScrolling}
+    >
+      {props.children}
+    </Content>
+  );
 };
 
 export default AppContent;
